@@ -1,1423 +1,749 @@
- l o b a l T O P E V / E S S B a t t e r y S o l u t i o n P r o v i d e r
+# ESS통합관리시스템 EMS 연동 가이드
+
+> 
+> 
+> 
+> 한국전기안전공사 ESS 통합관리시스템
+> 
+
+### 개요 1
+
+1. 용어 설명 **·** 1
+2. 문서 구성 **·** 1
+
+### KESCO 연계 프로그램/시뮬레이터 **·** 2
+
+1. 연계 구성 및 항목 **·** 2
+2. ESS 데이터 연계 항목 5
+    1. ESS Header **·** 5
+    2. PCS **·** 5
+    3. BAT **·** 6
+    4. Rack **·** 7
+    5. ETC **·** 7
+
+### Event 데이터 연계 항목 8
+
+1. Event 발생 Data **·** 8
+2. Event 복구 Data **·** 8
+3. Event Code 목록 **·** 9
+    1. PCS **·** 9
+    2. BAT **·** 9
+    3. Rack **·** 10
+    4. ETC **·** 11
 
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-QLR800 SM18S16P-M
-SPECIFICATION
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Table of Contents
-1. Product Overview
-2. Safety Information and Handling
-3. System Specification
-4. Product structure and Block Diagram
-5. BMS function & Structure
-6. Installation Guide
-7. Parts List
-8. Service, Maintenance and Warranty
-9. Contact information
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-1. Product Overview
-Product Name: Lithium Ion Battery for ESS
+### KESCO 연계 프로그램 12
 
-Supplier: BUMHAN UNISOLUTIONS Co., Ltd.
-
-Component Part Manufacturer Location
-
-Battery System
-
-Module (SM18S16P-M50)
-BPU (Battery Protection Unit)
-RACK (11Module Serial)
-
-BHUNISOL Co., Ltd.
-
-7 - 8, Dongtansandan 2 -
-gil, Hwaseong-city,
-Gyeonggi-do, Korea
-
-Fig. 1. Battery System Overview
-
-Table 1. Component Manufacturers
-
-Confidential
-BPU & Rack BMS Assembly
-
-Cell(LGC, M50L, 4.95Ah)
-
-4.54kWh Module (18S16P)
-
-50kWh
-ESS Battery System
-SGR1000V150A-4U
-
-Quick connector
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Component Product No. Serial No.
-
-Tray Assembly
-
-(Module)
-
-SM18S16P-M50 T.B.D
-
-Table 2. Component Information
-
-1.1 Scope
-
-This document details the safety and handling information, characteristics, requirements,
-
-installation instructions, operating guidelines, service, maintenance and warranty of ESS
-
-Lithium Ion Energy Storage System (“ESS” hereinafter) manufactured by BHUNISOLCo., Ltd.
-
-It is intended to provide certified personnel and users with information on safe handling,
-
-installation and usage of the specified product.
-
-This product is comprised of the following components. Refer to specification documents of
-
-each component for detailed information.
-
-Confidential
-Component Product No. Serial No.
-
-BPU & Rack BMS
-
-Rack BMS
-
-SGR1000V150A-4U
-
-GEN3_RBMS_REV1.
-
-T.B.D
-
-Quick connector
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-This section details the safety information that personnel must fully understand and follow
-
-while transporting, storing, installing, operating or servicing the ESS. Before proceeding
-
-with unloading, unpacking, handling, installation and operation, read the following details.
-
-2.1 Safety Symbols
-
-Table 3 lists safety symbols used in this document. Take necessary precautions when the
-
-following symbols are encountered.
-
-2. Safety Information and Handling
-Table 3. Safety Symbols
-
-Confidential
-2.2 General Safety Information
-
-ESS provides a safe source of electrical energy when operated as intended and as
-
-designed. Potentially hazardous circumstances such as excessive heat or electrolyte mist
-
-may occur under improper operating conditions, damage, misuse and/or abuse. The
-
-following safety precautions and the warning messages described in this section must be
-
-observed.
-
-If any of the following precautions are not fully understood, or if you have any questions,
-
-contact Customer Support for guidance. The Safety Section may not include all regulations
-
-for your locale; personnel working with ESS must review applicable federal, state and local
-
-regulations as well as the industry standards regarding this product.
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-2.2.1 Protective Equipment
-
-When working with ESS, the following personal protective equipment must be worn:
-
-High voltage rated rubber gloves -Safety goggles or other eye protection.
-2.2.2 Organic Solvent Electrolyte
-
-WARNING: Cell components of ESS contain organic solvent-based
-
-electrolyte. Breach of individual cells may allow some electrolyte to be
-
-released from the cell. Direct contact with the liquid electrolyte can cause
-
-skin irritation. If contact with the liquid electrolyte occurs, follow the
-
-suggestions below to minimize the chance of injury:
-
-Flush eyes immediately with cold running water for at least 15 minutes.
-Rinse skin immediately with water for at least 15 minutes.
-Remove clothing if soiled.
-Seek immediate medical attention.
-2.2.3 Electrolyte Vent Product
-
-WARNING: The Lithium-Ion chemistry used in ESS contains an organic
-
-solvent-based electrolyte. If ESS is misused, damaged or abused, internal
-
-cell pressure may increase to excessive levels. Each cell within the ESS is
-
-equipped with a non-resettable vent so that if internal cell pressure
-
-increases, the cell’s vent will activate releasing the electrolyte vent
-
-products. When operated as intended and designed, internal cell pressure
-
-remains stable and no electrolyte product venting occurs.
-
-Organic solvent electrolyte vent products are flammable. To avoid serious injury from the
-
-release and ignition of flammable products, the following guidelines must be observed:
-
-Operate the ESS under conditions only as specified in this manual.
-Keep sparks, flames and smoking materials away from the ESS.
-Do not incinerate, puncture or impact the ESS.
-Do not solder or weld to the ESS.
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-2.2.4 High Voltage Sources
-
-DANGER: HIGH VOLTAGE – ELECTRIC SHOCK HAZARD. ESS does not
-
-include the enclosure. As all Battery Modules and wires are exposed, the
-
-probability of electric shock is high. ESS contains high voltage electric shock
-
-sources. Do NOT open any cover of Battery Module and Tray Assembly.
-
-Exposure to high voltage can cause serious electrical burns, shock or death. To avoid
-
-high voltage electrical shock, follow the guidelines below:
-
-Do not work with high voltages unless you are qualified personnel.
-Personnel must fully understand the safety precautions associated with working
-on high voltage circuits.
-
-Personnel must fully understand the risk of working with batteries, and be
-prepared and equipped to take the necessary safety precautions.
-
-Necessary equipment, including but not limited to insulated tools, high voltage
-rated rubber gloves, rubber aprons, safety goggles, and face protection must be
-
-used.
-
-Ensure that the system is powered off and disconnected from outside circuits
-before servicing the unit.
-
-2.3 Unloading and Unpacking
-
-Carefully remove the plastic cover from the pallet. The packages are situated on a
-
-pallet on which it can be transported via forklift from location to location. A damaged
-
-box or rattles during transport may indicate rough handling. Make a descriptive
-
-notation on the delivery receipt before signing. If damage is found, request an
-
-inspection by the carrier and file a damage claim. Pay particular attention to a
-
-damaged crate or staining from electrolyte or other fluids. Delay in notifying carrier
-
-may result in the loss of reimbursement for damages.
-
-2.4 Storage
-
-Follow the guidelines below when storing the Tray Assembly -The Tray Assembly
-
-box should be upright as in Fig. 4 below. Do not stack or place upside down when
-
-storing the Tray Assembly boxes.
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-Fig. 3. Storage Guide
-
-Do not stack more than five Tray Assembly boxes.
-Storage temperature must be in the range of -20 to 60°C.
-Storage humidity must be less than 60% RH at non-condensing.
-Capacity degradation will occur depending on storage time.
-To minimize capacity degradation, storage temperature of less than 20°C
-and SOC 50%
-
-3.5 General Handling Information
-
-WARNING: Follow the guidelines below when handling the ESS.
-
-Do not short circuit the positive (+) and negative (-) terminals with metallic
-object intentionally.
-
-Do not use severely scarred or deformed battery. Dispose them
-immediately according to proper regulations.
-
-Do not damage insulation of cable and connectors
-Storage temperature must be in the range of -20 to 60°C.
-Storage humidity must be less than 60% RH at non-condensing.
-Capacity degradation will occur depending on storage time.
-
-To minimize capacity degradation, storage temperature of less than 20°C
-and SOC 50% is recommended.
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-3. System Specification
-Confidential
-Cell Module Rack
-
-Drawing
-
-&
-
-Picture
-
-Configuration 1S1P 18S16P 198S16P
-
-Mass <70g 30kg 480kg
-
-Operating temp 23+/5°C 23+/5°C 23+/5°C
-
-Load (kW)
-
-Operating
-
-Current
-
-Voltage range
-
-Capacity
-
-Energy
-
-Nom. Voltage
-
-( 65.68Vdc)
-
-LGC M50L (21700)
-
-11 modules are
-connected in
-series with one
-rack BMS and
-one BPU
-50kWh
-
-(722.5Vdc)
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-3.1.1 Appearance
-
-There shall be no such defects as deep scratch, crack, rust, discoloration or leakage, which
-
-may adversely affect the commercial value of the cell.
-
-3.1.2 Dimension
-
-Diameter : ≤ 21.15 mm
-
-Height : ≤ 70.15 mm
-
-3.1.3 Test condition
-
-3.1.3.1 Standard Charge
-
-Unless otherwise specified, “Rated Charge” shall consist of charging at constant current of
-
-0.3C(1440mA).The cell shall then be charged at constant voltage of 4.20V while tapering
-
-the charge current. Charging shall be terminated when the charging current has tapered to
-
-50mA. For test purposes, charging shall be performed at 25ºC.
-
-3.1.3.2 Standard Discharge
-
-“Standard Discharge” shall consist of discharging at a constant current of 0.2C(960mA) to
-
-2.50V. Discharging is to be performed at 25ºC unless otherwise noted (such as capacity
-
-versus temperature).
-
-3.1 Battery Cell Specification (INR21700 M50L)
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-3.1.4 Nominal Specification
-
-Item Condition Specification
-
-Energy
-
-By Std.charge/discharge Nom. 18.2 Wh
-Min. 17.6 Wh
-Nominal Voltage Average by Std. charge/discharge 3.69V
-
-Shipping Cell Voltage At ex-factory state 3.587 ± 0.01V(Tentative)
-
-Standard Charge
-
-Constantcurrent (1C=4800mA)
-Constant voltage
-End condition (Cut Off)
-Charging Time
-0.3C (1,440mA)
-4.20 V
-50mA
-4h
-Max. Charge Voltage
-
-In allmeasurements and operations of the cell,
-the minimum allowable closed circuitvoltage
-shall not exceed the following value
-4.20V
-
-Max. Charge Current
-
-(complete full charge)
-
-0 ~ 25°C
-25 ~ 45°C
-0.3C (1,440mA)
-0.7C (3,360mA)
-Standard Discharge
-
-Constantcurrent
-End voltage (Cut off)
-0.2C (960mA)
-2.50 V
-Min.Discharge Voltage
-
-In all measurements and operations of the cell,
-the minimum allowable closed circuitvoltage
-shall not be below the following value
-2.50V
-
-Max. Discharge Current
-
-20 ~ 10°C
-10 ~ 25°C
-25 ~ 55°C
-0.5C (2,400mA)
-3.0C (14,400mA)
-1.5C(7,200mA)
-Over Voltage Protection
-
-Cell voltage shall not exceed the following value
-to prevent any safety events. And cell
-performance can’t be guaranteed between
-4.20V and 4.25V
-4.25V
-
-Under Voltage
-
-Protection
-
-Cell voltage shall not drop below the following
-value to prevent any safety events. And cell
-performance can’t be guaranteed between
-2.50V and 2.00V
-2.00V
-
-Weight Without Washer 67.5 ±1.0g (TBD)
-
-Operating
-
-Temperature)
-
-(Atmosphere or
-
-Chamber Temperature)
-
-Charge
-Discharge
-0 ~ 45°C
-
-20~ 55°C
-* Max. cell surface temperature should be below 70°Cfor discharging. (Temperature cut-off
-function is needed on BMU under 70’C of cell surface temperature.)
-Storage temperature
-
-(Atmosphere or
-
-Chamber Temperature)
-
-1 month
-3 month
-1 year
-Recovery capacity after the storage ≥ 80% of
-minimum energy(or capacity)
-20 ~ 55°C
-20 ~ 45°C
-20 ~ 25°C
-Storage Humidity Under 60%
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-3.1.5 Electrical Specification
-
-3.1.6 Environmental Specification
-
-Item Condition Specification
-
-Initial AC
-Impedance
-Cell shall be measured at 1kHz after charge per
-4.1.
-≤ 17mΩ
-
-Initial DC
-
-Impedance
-
-Cell shall be charged per 4.1.1 and discharged to
-the SOC (states of charge) 50%.
-Measurement of internal impedance under DC
-loads at constant current of 0.5C for 10 sec at
-25ºC without any attachment of metal leads.
-23 ±6 mΩ
-
-Initial Energy
-
-Cells shall be charged per 4.1.1 and discharged
-per 4.1.2 within 1h after full charge.
-≥ 17.6 Wh
-
-Cycle Life
-(0.3C / 0.5C)
-Charge(CC/CV) : 0.3C(1,440mA), 4.1V, 240mA
-
-Cut-off, rest time 10min, at 25 °C
-Discharge(CC) : 0.5C(2,400mA), 2.85V cut-off,
-rest time 20min, at 25°C
-≥80% of initial Energy
-
-at 1,000 cycles
-
-Item Condition Specification
-
-Storage
-Characteristics
-Cells shall be charged per 4.1.1 and stored in a
-temperature-controlled environment at 25ºC for 30
-days. After storage, cells shall be discharged per
-4.1.2 to obtain the remaining capacity.
-Energy remain rate
-≥ 90% of Whminin 4.2.
-High Temperature
-Storage Test
-Cells shall be charged per Standard charge and
-stored in a temperature controlledenvironment at
-55 °C for 1 week. After storage, cells shall be
-discharged per 4.1.2 and cycled per 4.1.1 and
-4.1.2 for 3 cycles to obtain recovered capacity
-No leakage,
-Energy recovery rate
-≥ 80% of Whminin 4.2.
-Temperature
-Dependency of
-Energy
-Cells shall be charged per 4.1.1 at 25°Cand
-discharged per 4.1.2 at the following temperatures.
-Charge Discharge Energy
-
-25 °C
-
-10 °C ≥70% of Whminin 4.2.
-0 °C ≥80% of Whminin 4.2.
-
-25 °C ≥100% of Whminin 4.2.
-
-55 °C ≥95% of Whminin 4.2.
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-3.1.7 Life Characteristics
-
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-3.2 Module Assembly Specification
-Confidential
-Module SM18S16P-M
-Nominal Energy[kWh] 5.
-Rated Energy[kWh] 4.
-Nominal Capacity[Ah] 79.
-Rated Capacity[Ah] 69.
-Rated Voltage[V] 65.
-Voltage Range[V] 54~74.
-Usable Voltage Range[V]
-(SOC 85% operation) 56.7~73.
-Max (Chg/Dchg) [KW] 1.89 / 4.
-Dimension
-[WDH, mm] 446 * 473.4 * 96
-Weight[kg] 30
-Electrical & Mechanical Specifications
-
-Operating Temperature - 10 °C ~ +45°C / +14°F ~ +113°F
-Chg/ Dchgefficiency 95%
-Self-discharge < 2.5% per^ month^ at 25°C
-Storage time 12 months at 25°C
-Maximum relative Humidity 85%
-Operating & Environmental Condition
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Rack BMS and BPU are integrated in single box unit
-
-Rack BMS : Controls the charging and discharging of the ESS using data collected from Module
-BMS
-
-BPU : Controls current flow by commands received from Rack BMS.
-Battery connections are placed in front side,PCS connections are placed in rear side.
-3.3 BPU Specification (SGR1000V150A-4U)
-Confidential
-Specification Remark
-
-Key component
-
-Rack BMS
-DC contactor (2EA)
-DC Fuse (1EA)
-Voltage & Current sensing device
-
-1000Vdc / 150Adc
-1000Vdc / 200Adc
-Dimension
-(L x W x H mm)
-445 X 465 X 176 About 10 kg
-
-Aux Power IN
-
-1 of 12Vdc input (12V±5%,)
-
-BMS operation (12Vdc, 60Wmax)
-should be supplied by customer
-
-Communication
-(SPI)
-Iso-SPI
-
-For Rack to Module
-communication
-Communication
-
-CAN 2.0B 500kbps
-TCP/IP (to Host Only)
-For Rack to Rack
-& Rack to Host system
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-3.4 Battery Rack Specification
-■ QLR800-SM18S16P-M50 (11modules in series)
-
-Confidential
-Rack
-
-QLR
-
-SM18S16P-M
-
-Configuration
-(module serial) 11S
-Total Energy[kWh] 57.
-Rated Energy[kWh] 50
-Usable Energy[kWh]
-(SOC 85% operation)
-45.
-Rated Capacity[Ah] 69.
-Rated Voltage[V] 722.
-Voltage Range[V] 594~
-Usable Voltage Range[V]
-(SOC 85% operation)
-623.7~811.
-Load Max(Chg/ DChg) [KW] 20.8 / 44.
-Operating temperature 23 ± 5 °C
-Humidity The battery room average relative
-humidity does not exceed 40%.
-Communication IsoSPI, CAN2.0B , TCP/IP
-Dimension
-[WDH, mm]
-500 * 700 * 1500
-Weight[kg] 480
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Confidential
-Rack BMS Parameter
-No Item Default Unit Remark
-
-1 Charge OCP 40 A Rack CHG OCP Parameter
-2 Discharge OCP 80 A Rack DISCHG OCP Parameter
-3 Stop Charging Voltage 4.18 V 충전 (^) 상한 (^) 전압 [Cell 기준]
-4 Restart Charging Voltage 3.7 V 충전 시작 전압 [Cell 기준]
-5 Cell balancing Setting Value 3.7 V Cell 밸런싱 (^) 기준 (^) 전압 [3.7V 이하 Balancing 없음]
-6 Cell balancing Auto Mode 1 - 1 : Balancing Auto
-7 Module BMS Count 11 EA Module BMS 수량
-8 Rack BMS ID 1 - Rack BMS ID
-9 UsingTCP/IP 1 - 1 : Using TCP/IP
-10 Cell balancing Start Delta mV 20 ㎷ Cell 밸런싱 시작 Cell 전압 편차
-11 Cell balancing Stop Delta mV (^10) ㎷ Cell 밸런싱 (^) 중단 Cell 전압 (^) 편차
-12 Module BMS Cell Count 18 - Module Cell 직렬 수량
-13 Charge OC Warning 35 A 충전 (^) 과전류 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-14 Discharge OC Warning 75 A 방전 과전류 경고 [RBMS Relay Off 동작 없음]
-15 Over Voltage Warning 818 V Rack 고전압 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-16 Over Voltage Error 821 V Rack OVP Parameter
-17 Under Voltage Warning 580 V Rack 저전압 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-18 Under Voltage Error 575 V Rack UVP Parameter
-19 Cell DeltaV Warning 100 mV Cell MIN V >3.7 전압 편차 경고 [RBMS Relay Off 동작 없음]
-20 Low SOC Warning 5 %
-21 Low SOC Error 0 %
-22 High SOC Warning 100 %
-23 High SOC Error 110 %
-24 Rack Parallel count 1 - Rack 병렬 (^) 구성 (^) 수량
-25 Main Contactor Delay Time 2 sec Relay 동작 (^) 지연 (^) 설정
-26 Pack Capacity 73.7 A Pack SOC 연산 (^) 기준 (^) 용량
-27 Current Sensor Type 200 A 전류 (^) 센서 (^) 용량
-28 Rack BMS IP Address 192.168.1.60 - Rack BMS MODBUS TCP/IP Address
-29 SOH % (Read Only) 100 % Battery SOH
-30 SOH Capacity 34 Ah SOH 연산 (^) 기준 (^) 용량
-31 SOH Start Voltage 53 V SOH 연산 (^) 시작 (^) 전압 [Module Voltage]
-32 SOH End Voltage 50 V SOH 연산 (^) 종료 (^) 전압 [Module Voltage]
-33 SOH Min. Voltage 56 V SOH 연산 (^) 방전 (^) 시작 (^) 전압
-34 FAN ON Temp. °C (^40) °C FAN 동작 (^) 온도 [일부 (^) 모델에 (^) 해당]
-35 FAN OFF Temp. °C 35 °C FAN 동작 종료 온도 [일부 모델에 해당]
-36 UV Warning 3.00 V Cell 저전압 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-37 UV Protection 2.80 V Cell UVP Parameter
-38 OV Warning 4.15 V Cell 고전압 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-39 OV Protection 4.25 V Cell OVP Parameter
-40 OT Warning (^40) °C Cell 과열 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-41 OT Protection 45 °C Cell OTP Parameter
-42 UT Warning (^2) °C Cell 저온 (^) 경고 [RBMS Relay Off 동작 (^) 없음]
-43 UT Protection 0 °C Cell UTP Parameter
-44 Cell Temperature Imbalance (^10) °C Cell T Imbalance Parameter
-45 Cell Voltage Imbalance 150 mV Cell V Imbalance Parameter
-
-Rack BMS Parameter
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-3.5. Connector Configuration (SGR1000V150A-4U)
-No NAME
-
-Start point
-
-Housing Pin No Pin Map
-
-1
-
-SPI A, B
-For BPU to Module &
-Module to Module for
-communication
-Connector type:
-RJ45 (8pin)
-1 IM A,B
-
-2 IM A,B
-
-3 IM A,B
-
-4 NC
-
-5 NC
-
-6 IP A,B
-
-7 IP A,B
-
-8 IP A,B
-
-2
-
-CAN A,B
-For Rack to Rack
-& Rack to Sys BMS
-Connector type:
-39 - 30 - 1060
-1 NC
-
-2 CANHigh
-
-3 NC
-
-4 NC
-
-5 CANLow
-
-6 GND
-
-3
-
-Ethernet
-For Rack to Host System
-Connector type:
-RJ45 (8pin)
-1 TD+
-
-2 TD-
-
-3 RX+
-
-4 NC
-
-5 NC
-
-6 RX-
-
-7 NC
-
-8 NC
-
-4 12V DC INPUT
-
-Connector type:
-SL5TA-2P + DC 12 V
-GND
-Confidential
-A B
-3.5.1 Signal Connection
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-No NAME
-
-Start point
-
-Housing Pin No Pin Map
-
-1
-
-BPU PCS Terminal
-M8 bolting terminal
-B+
-
-PCS Positive terminal
-(Orange)
-B-
-
-PCS Negative terminal
-(Black)
-2
-
-BPU Battery Terminal
-
-HAN S 200
-P+
-
-Battery Positive
-terminal(Red)
-P-
-
-Battery Negative
-terminal(Black)
-(^3) Module Terminal
-HAN S 200
-
-Module Positive
-terminal (Red )
-
-Module Negative
-terminal (Black)
-+ -
-
-(Red + / Black -)
-Confidential
-3.5.2 HVConnection
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-■ Battery Module Parts function Description
-Confidential
-4. Product structure
-4.1 Product structure
-Module BMS
-inside
-Signal 2ports
-(ISO-SPI)
-Nega. power
-
-Connector (Black)
-
-Posi. Power
-
-connector (Red)
-
-4.2. Drawings (Tray or Module)
-Type1) Nominal 4.55kWh Module
-(SM18S16P-M50)
-Water injection
-
-Nozzle connector
-
-Front
-Rear
-Current fuse
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-4.3. Drawings (System for Industrial )
-700
-
-500
-
-1500
-
-QLR800 -SM18S16P-M50
-
-(11modules in series)
-
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-4.5.1 Battery Single Line Block Diagram Confidential
-Max Module #4
-4.5.2 BMS Block Diagram
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-5.1 Protection
-2 or 3 hierarchy structure: Module BMS/ Rack BMS /Sys BMS
-5. Function & Structure
-Function Module BMS Rack BMS Sys BMS
-
-Measurement
-
-Rack Voltage / Current ◎
-
-Cell Voltage / Temp ◎
-
-Module Voltage ◎
-
-Calculation
-
-SOC Estimation ◎ ◎
-
-SOH Estimation ◎ ◎
-
-Control
-
-Switching Control ◎
-
-Cell Balancing ◎ ◎
-
-Communication
-
-ISO-SPI ◎
-
-CAN2.0B (500 kbps) ◎ ◎
-
-Modbus TCP/IP ◎ ◎
-
-Confidential
-**- BMS has 2 step protection stages, which consists of Warning – Protection
-
-BMS can turn off its own DC-contactor regardless of PCS operating in emergency situation
-Protection scheme:**
-Warning & Stop stage: BMS sends status information only to PCS, whenever PCS receives
-this alarm information then we recommend stop or reducing charging / discharging power
-
-Protection: BMS turns off its own DC-contactor by itself regardless of state of PCS operation
-to prevent critical damages on cell
-
-5.2 Module BMS Structure
-Module BMS design to detect voltage, temperature and execution of cell balancing
-
-function of all 14cells, 18cells, 28cell’s
-
-Can mange up to 14cells, 18cells, 28 cells in series connection
-Detects cell voltage (1 point per cell) and temperature (2~4 points per module)
-Executes cell balancing function (Passive method)
-Supports ISO-SPI
-Power consumption: ~2W
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-5.3 Rack BMS structure
-Confidential
-Rack BMS can manage up to 17 Module BMS’s and detects total voltage, current, and
-
-execute protection function by switching its own DC-contactor
-
-Can mange up to 17 Module BMS
-Protection functions (Control DC-contactor for safety)
-Controls the cell balancing function
-Supports 1 of CANBUS 2.0B port
-Detect rack total voltage and In/out current
-Calculates SOC & SOH
-Power consumption: ~15W (including DC-contactor power consumption)
-BMS parts location
-
-A- 1 CPU Main IC (TEXAS INSTRUMENTS)
-A- 2 FUSE BMS Fuse (SCHURTER)
-Communication Port
-
-A- 1
-A- 2
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-6. 설치
-6 .1 개요 [Multi Rack]
-이 페이지에서는 ESS의 조립 및 설치에 대한 자세한 정보를 제공합니다. 설치를 진행
-
-하기 전에 설치 설명서를 읽고 숙지하십시오. 완전히 설치된 ESS는 아래 그림 과 같습
-
-니다.
-
-Confidential
-Aux AC power cable
-
-CANSignalcable
-
-Power cable (-)
-
-Power cable (+)
-
-Aux DC power cable
-
-Modbus Signal cable
-
-+
--
-Modbus Signal cable
-
-CAN Signal cable
-
-Sys BMS
-
-Cable
-25sqmm
-Serial connection
-
-Serial connection Serial connection
-
-BPU1 BPU2
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Single Tray configuration is shown below in Fig. 4.
-
-Confidential
-To other module
-or BPU
-Minus(-)
-Fig. 4.2 Tray Structure & Handling guide
-
-Plus(+)
-
-handle
-
-Water
-nozzle
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-Terminal;
-
-M6
-
-Power cable
-6.2 Power connector
-The Tray’s power connector uses Han S200 quick connector.
-
-The locking lever in the connector should be closed. (see the below fig.)
-
-Recommended power cable normal cross-sectional area is 25mm2(Industrial use) /
-
-16mm2(residential use).
-
-*AWM 3817 4AWG (25 sq.mm) for Industrial ESS
-
-*AWG 5 (16 sq.mm) for Residential ESS
-
-Confidential
-Locking lever
-
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-The RJ45 connectors used for the SGR1000V150A-4U BPU (Industrial ESS Battery)
-
-and all signal cable is 24AWG shield cable.
-
-6.3 Signal connector
-Fig. 5. Signal connector type
-
-Signal cable assembly
-
-Refer to the configuration of signal connector between Trays and to the PCS as below
-
-Confidential
-SGR1000V150A-4U
-Module to module/Rack Connector
-(RJ45)
-SGR1000V150A-4U
-BPU
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-1 RBMS On/off SW
-
-Sys BMS (in BCP for multi rack)
-Sys BMS On/off SW
-
-BPU (SGR1000V150A-4U)
-2
-
-6.4.1 Install Sequence (SGR1000V150A-4U)
-(1) All system switch should be turned “off” before doing installation.
-
-(2) Insert and bolting the battery tray in the battery enclosure
-
-(3) Connect the power cables , signal cables from the tray to the BPU and among the
-
-battery
-
-(4) Connect the power cables, On/off SW cable, singnal & 12V-in cables from the
-
-BPU to the PCS
-
-(5) Turn on the BPU switch as “ON” (If the system is in normal status, BPU’
-
-LEDs display green will be ON. if the error may be occurred, the alarm red LED
-
-will be ON)
-
-(6) In the case of multi rack, you can turn on the Sys BMS switch ON
-
-1
-
-2
-
-Multi rack Single rack
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-1 RBMS On/off SW
-
-Sys BMS (in BCP for multi rack)
-Sys BMS On/off SW
-
-BPU (SGR1000V150A-4U)
-2
-
-Multi rack Single rack
-6.4.2 System Turn Off Sequence (SGR1000V150A-4U)
-(1)Exteranlay connected PCS off and then → switch off. Then check all the BPU
-
-LED or LCD display is off.
-
-(^21)
-
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-6.6 Starting Sequence
-Rack BMS ON
-
-BMS Error
-BMS Error Reset
-
-Error Check
-
-Standby
-
-Relay On standby
-
-Single Rack [From PMS]
-Multi Rack [From Sys BMS]
-DC 12V-in
-
-PCS or UPS
-
-Yes
-
-Yes
-
-No error
-
-Confidential
-System BMS ON
-System Standby
-System
-Error Check
-Relay On standby
-
-[From PMS]
-
-BMS Error
-Yes
-
-No error
-
-Single rack
-Muti rack
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-No Parts Figure Specification Q’tty
-
-1 Rack frame
-■ QLR800-SM18S16P-M50
-(11modules in series)^1
-2 Module 4.54kWh Module (18S/16P) 11
-4 BPU(SGR1000V150A-4U)
-Spec: 1000Vdc/150Amax
-L*W*H =365 X 435 X 176
-1
-5 Signal cable (module to module)
-Connector type:
-RJ45
-10
-6 Signal cable (module to BPU)
-Connector type:
-RJ45
-1
-7
-HV cable
-(module to module)
-HAN S 200 (Red / Black) 10
-8
-HV cable
-(module to BPU- )
-HAN S 200 (Black) 1
-7. 1 Parts List ( QLR800)
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-No Parts Figure Specification Q’tty
-
-10 HV cable
-(module to BPU+ )
-HAN S 200 (Red) 1
-14 Terminal resistor 6pin 1
-15 M 5 bolt M5 4~20
-16 M6 washer bolt M6 4~10
-17 cage nut M5 TBD
-18 TBD TBD TBD
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-8 .1 Service
-
-There are no user serviceable parts in the Tray Assembly. Written authorization from
-
-BUMHAN UNISOL is required to open the Tray Assembly or perform any maintenance
-
-thereon. For service inquiries and questions, please contact BUMHAN UNISOLUTION.
-
-8 .2 Maintenance
-
-8.2.1 Be sure to refer to the specialist construction personnel for installation movement
-
-and installation work.
-
-Failure to install the installation criteria may result in safety accidents. We request that
-you entreat us.
-
-8.2.2 Caution for selecting battery power wire size
-
-Connect the battery power line (for charging or discharging) to match the + / -polarity.
-Use the output line according to the allowable current value. The wire goes up and down,
-
-causing a fire. (High current causes overheating and fire.)
-
-It is not appropriate to determine the size of the wire relative to the front of the wire
-
-thickness, which is normally used to determine the wire size between the battery and the
-
-final load. A voltage drop is caused by flowing current or when the length of the wire is
-
-long enough to cause a voltage drop.
-
-With this voltage drop, the voltage applied to the wire is low enough to supply the load to
-
-the wire attached to the wire.
-
-In particular, when a peak current is required for a high peak, the voltage drop becomes
-
-smaller and the voltage drop becomes larger. Therefore, use a large enough wire.
-
-8.2.3 Cautions for charging when applying to ESS and UPS systems
-
-Do not operate the charging mode on the charger.
-This product does not require a uniform charging operation, unlike lead acid batteries,
-
-and should not apply uniformly charging mode.
-
-Do not operate the equivalent charging mode when setting up the operating unit
-
-(charger) operation.
-
-8. Service, Maintenance and Warranty
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-8.2.4 Safety and protection functions (common specification)
-
-Over-current protection (charge current and discharge current limit)
-By the Protection Circuit (BMS) of this battery, the I/O current is limited to the set value
-
-(refer to model specification).
-
-This function prevents the battery from being subjected to excessive current, thereby
-
-ensuring the battery is safe.
-
-Short circuit to short circuit (Short) : Short circuit to short circuit between short and short
-
-circuits (short) when handling short circuits (short), the protection circuit (BMS) immediately
-
-shuts off the output.
-
-Over Voltage Protection
-The voltage of the lithium ion cell cellis monitored by the BMS (battery) protected by the
-
-battery.
-
-When charging, each cell group stops charging when the specified voltage exceeds the
-
-specified voltage value, and restores resume when the specified voltage is restored.
-
-Under Voltage Protection
-The lithium ion cell voltage is monitored by the BMS (battery) protected by this battery.
-
-If each cell group falls below the prescribed voltage limit, the discharged discharge will
-
-resume once the recovery is resumed and the discharged voltage will resume.
-
-Temperature control unit
-The protection circuitry (BMS) shuts down the output immediately when temperature
-
-sensing is detected.
-
-8.2.5 General Precautions for Use
-
-As the temperature increases, it is necessary to shorten the battery life and ensure that it is
-well ventilated.
-
-Use a current rated current and a rated drain current before the battery charge is charged.
-Avoid direct moisture contact.
-Do not use any other forms of utilization and wiring other than the user production
-described in the manual.
-
-Do not put fire into fire, heat, or fire.
-Do not attempt to disassemble and damage the disassembly and exit.
-8.2.6 Maintenance check cycle
-
-SMPS function check cycle -3 ~ 5 years (replace if necessary)
-Battery capacity function check cycle -3 years
-Other electronic parts such as fuse, relay, module –3years (replace if necessary)
-8.2.7 Decomposition or modification are prohibited.
-
-It may cause unexpected accidents.
-
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-8.3 Warranty
-
-This Agreement applies to the ESS products, systems and accessories purchased
-
-by the Seller to the Buyer and shall be applied after approval for use under the
-
-product specifications and mutually agreed terms.
-
-8.3.1 Warranty details
-
-This applies if the Product is free from defects by the Seller and is suitable for mutually agreed
-
-terms of use during the warranty period.
-
-BUMHAN UNISOLUTION shall be valid for three years from the time the product is handed over
-
-from the seller to the purchaser, subject to the following operating conditions:
-
-Operation pattern: Within 1 cycle per day, more than 2 hours after charging is finished
-Operating temperature: 23 ± 5 °C
-Operating condition: 300Cycle / 1year, less than 0.3 charge / discharge
-Operating condition: DoD 90% or less
-Repair and management of racks, replacement of deficient capacity (module or rack), etc.
-Battery life is affected by SOC, temperature, accumulated energy and charge / discharge power.
-
-The average annual SOC does not exceed (40)%.
-The battery room temperature / humidity should not exceed 28 °C / 85%.
-The battery room average relative humidity does not exceed (40)%.
-Annual cumulative energy usage should not be exceeded.
-DC charging / discharging rate should not exceed the specific load for the each model.
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-8.3.2 Warranty Exclusions
-
-BUMHAN UNISOLUTION is not liable to Buyer or any third party, including natural disasters,
-
-war, strikes, riots and improper use, We will not be responsible for any unforeseen events
-
-beyond the control of Emerging BH UNISOL, including after-warranty service and maintenance
-
-costs, including any technology or physical event or condition that is reasonably unknown or
-
-inconsistent with the sale or claim of the product.
-
-The following conditions are exempted from the warranty.
-
-Improper transport, storage, installation, wiring, or handling
-Any unauthorized alteration, modification, disassembly, repair or replacement
-Damage or failure due to non-compliance with national, state or local electrical or electrical
-safety regulations
-
-Installation or maintenance manual provided by BH UNISOL
-Incorrect use, improper operation or environment
-Do not follow safety warnings or instructions
-Unacceptable operating range (state of charge (SOC), voltage, current, temperature, number
-of cycles, or cumulative energy)
-
-Normal wear, tear, neglect, accident or abuse
-Unusual physical or electrical stresses (blackout, inrush current, lightning, flood,
-fire, accidental breakdown, etc.)
-
-Force Majeure
-Incompatible (inconsistent) Use of an inverter, rectifier or PCS.
-In case of a problem, the battery event log file may not be provided to the seller at BH
-UNISOL, which is stored in the BPU or BMS.
-
-8.3.3 Guarantee amount
-
-This product is currently covered by PL insurance of 100 million won against personal and
-
-personal compensation, and compensation for damages within the limit. (Additional insurance
-
-if necessary)
-
-8.4 Post-Warranty Policy / Post-Warranty Service Policy
-
-BH UNISOL provides paid services such as product damage, repair, and product replacement
-
-after the warranty period.
-
-However, for some items and conditions of use, paid services may not be applicable.
-
-8.4.1 Paid service costs
-
-All costs such as material costs, labor costs, warehousing costs, transportation costs, customs
-
-duties, analysis costs, and disposal costs (if necessary) are charged at the time market value.
-
-※Repair includes part / product price, additional cost and transportation cost.
-
-Confidential
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
-9. Contact information
-Confidential
-Corporate Headquarters
-BUMHAN UNISOLUTIONS, Co. Ltd. 7 - 8, Dongtansandan 2 - gil, Hwaseong-si, Gyeonggi-
-
-do, Republic of Korea
-
-Success with your partner,
-7 - 8, Dongtansandan-2ro, Hwaseong-si, Gyeonggi-do,
-18487, Republic of Korea
+> 5.
+> 
+> 
+> 6.
+> 
+1. ESS 데이터 연동 **·** 21
+    1. API 명세 **·** 21
+    2. 요청 메시지 상세 **·** 21
+    3. 응답 메시지 상세 **·** 23
+2. Event 발생 데이터 연동 **·** 24
+3. API 명세 **·** 24
+4. 요청 메시지 상세 **·** 24
+5. 응답 메시지 상세 **·** 25
+6. Event 복구 데이터 연동 **·** 25
+    1. API 명세 **·** 25
+    2. 요청 메시지 상세 **·** 26
+    3. 응답 메시지 상세 **·** 26
+7. 참고사항 28
+    1. 샘플 코드 **·** 28
+
+> 7.2. 보안 · 28
+> 
+> 
+> 7.3. 문의처 **·** 28
+> 
+
+> 
+> 
+1. **개요**
+
+> 이 문서는 「 전기안전관리법 」 (이하“법”이라 한다) 제18조에 따른 『 전기설비 검사 및 점검의 방법‧절차 등에 관한 고시 』 (이하“고시”라 한다) 제24조 제4항의 “전기저장장치 사업장 또는 제조사, 운영ㆍ관리업체는 안전공사가 정하는 절차와 방법에 따라 운영정보를 제공하여야 하며, 안전공사는 그 절차와 방법을 홈페이지에 공고하여야 한다.”는 조항에 따라 한국전기안전공사 “ESS 통합관리시스템”과 “사업장 ESS 운영설비”간의 연동 절차 를 안내하는 문서이다.
+> 
+
+## 용어 설명
+
+- ESS 통합관리시스템
+
+> ESS 설치 사업장의 운영정보를 연계하여 실시간 모니터링, 온라인 무정전 검사 수행, 충전율 이행 여부 및 안전 관련 사항 등을 확인하는 시스템
+> 
+- KESCO 연계 프로그램
+
+> ESS 통합관리시스템으로 ESS 운영 데이터, Event 데이터를 연계하는 프로그램. 연계 담 당자는 이 프로그램 내부의 Rest API 서버와 연계하여야 한다.
+> 
+- KESCO 연계 시뮬레이터
+
+> ESS 통합관리시스템으로 ESS 운영 데이터, Event를 연계하기 전에 테스트할 수 있는 프로그램. 연계 담당자는 내부의 Rest API 서버와 통신하며 개발할 수 있다.
+> 
+- 설비번호
+
+> “고객번호(호기번호)”로 구성되어 ESS 시설을 구분하는 고유번호. 한국전기안전공사 에서 부여한다.
+> 
+
+## 문서 구성
+
+> 이 문서는 ESS 통합관리시스템 연계 의무가 있는 회사에 ESS 데이터 연동에 대한 이해를 돕 고자 작성된 문서이다. 1장에서는 개요 및 연계 구성도를 간략하게 설명한다. 2장에서 연계 에 필요한 ESS 운영 데이터 항목을, 3장에서는 Event 데이터 연계 항목에 대해 설명한다. 4 장에서는 연계에 필요한 프로그램을 설치하고 기동하는 방법에 대해 다룬다. 5장은 ESS 통 합관리시스템으로 데이터 연계 전에 테스트하며 개발할 수 있는 KESCO 연계 시뮬레이터에 대해 설명한다. 6장은 REST API Server의 API 명세가 작성되어 있다. 7장은 참고사항으로 샘플코드를 확인하는 방법에 대해 기술한다.
+> 
+
+## KESCO 연계 프로그램/시뮬레이터
+
+![](attachment:9cb81a57-6275-42dc-829c-af405df4a9a2:image4.jpeg)
+
+> (KESCO 연계 프로그램)
+> 
+> 
+> KESCO 연계 프로그램은 ESS 운영 데이터, Event 데이터를 ESS 통합관리시스템으로 연계 하는 프로그램이다. 프로그램 내부에 Rest API Server를 탑재하고 있어 연계 담당자는 프로 그램 내부 API 서버로 ESS 운영 데이터, Event 데이터를 전송하면 된다. 내부 API 서버로 전송된 데이터는 DB 저장, 정합성 확인 등 일련의 작업을 거친 뒤 ESS 통합관리시스템으로 최종적으로 데이터를 전송한다.
+> 
+> KESCO 연계 시뮬레이터는 연계 담당자가 ESS 통합관리시스템으로 KESCO 연계 프로그램 을 통해 연계하기 전, 개발하는 과정에서 필요한 프로그램이다. 시뮬레이터를 통해 테스트 하고 최종적으로 KESCO 연계 프로그램을 통해 ESS 통합관리시스템으로 연동하면 된다.
+> 
+
+## 연계 구성 및 항목
+
+> 데이터 연계는 ESS 운영 데이터와 Event 데이터 두 가지로 나뉘어 연계하여야 한다. ESS 운영 데이터는 PCS, BAT, Rack, ETC(온습도) 실시간 운영 데이터를 1분 단위로 주기적으로 전송하여야 한다. Event 데이터는 발생 즉시 발생 시간과 함께 전송하고, 복구 시 복구시간 과 함께 즉시 실시간으로 전송하여야 한다.
+> 
+
+![](attachment:0d20149e-8b4c-4d1e-b1b5-01dc06f0515a:image5.jpeg)
+
+> (KESCO 연계 프로그램을 통한 연계 구성도)
+> 
+
+EMS·EPC·ESS 社 등 연계를 담당하는 회사는 ‘KESCO 연계 프로그램’을 통해서 KESCO ESS 통합관리시스템에 데이터를 연계할 수 있다. KESCO 연계 프로그램은 Rest API server, KESCO API 등으로 구현되어 있으며, 연계 담당사는 KESCO 연계 프로그램을 실행 하고, 내부의 Rest API Server에 전송 주기에 맞춰 데이터를 송신하면 연계가 완료된다. 수 신한 데이터는 내부적으로 데이터 정합성 검증 등 일련의 과정을 거쳐 KESCO ESS 통합관 리시스템에 자동으로 연계되는 구조이다.
+
+![](attachment:8f6e02eb-8fa9-410b-b39d-ec6b0392508d:image6.jpeg)
+
+> (KESCO 연계 시뮬레이터 활용법)
+> 
+> 
+> 연계 담당자는 KESCO 연계 프로그램을 통해 ESS 통합관리시스템으로 연계하기 이전에 ‘KESCO 연계 시뮬레이터’를 활용하여 개발할 것을 권장한다. KESCO 연계 시뮬레이터는 ESS 운영 데이터의 정합성 여부, API 테스트 및 개발 로그를 확인할 수 있는 프로그램이다. 연계 시뮬레이터를 통해 개발이 완료되면 KESCO 연계 프로그램으로 전환하여 ESS 통합관 리시스템에 연동하면 마무리된다. 테스트가 완료된 KESCO 연계 시뮬레이터는 연계의 실수 를 방지하기 위하여 실 연계에서는 반드시 종료해야 한다.
+> 
+> (그림 삽입을 위한 의도적 공란)
+> 
+
+![](attachment:89ba3639-97f4-4b3c-8578-0f3fe78bb6db:image7.jpeg)
+
+> (1. KESCO 연계 프로그램을 현장에 설치하여 연동하는 경우)
+> 
+
+![](attachment:cd1f98ea-89d1-4352-82e0-7690f0ca8708:image8.jpeg)
+
+> (2. KESCO 연계 프로그램을 상위에 설치하여 연동하는 경우)
+> 
+> 
+> 연계 담당사는 KESCO 연계 프로그램을 현장 또는 담당사의 중앙서버에 설치하여 연동할 수 있다. 위 1번 그림이 ESS 현장에 설치하여 연동하는 경우를 나타내고, 아래 2번 그림은 담당사의 각 ESS 시설 데이터를 모으는 중앙서버가 있는 경우 연계 프로그램을 설치하여 연동할 수 있음을 나타낸다. 담당사의 여건에 따라 필요한 구조를 적용하면 된다. G/W라고 표시한 부분은 KESCO 연계 프로그램과의 연계에 필요한 부분을 그림으로 나타낸 것에 불 과하다.
+> 
+> ![](attachment:d4e99813-691a-4fc8-818f-03fbf9cdd220:image9.jpeg)
+> 
+> (잘못된 예시)
+> 
+
+# ESS 데이터 연계 항목
+
+> 2장에서는 ESS 통합관리시스템으로 연계해야 할 ESS 데이터 항목에 대해 설명한다. 사이 트 정보를 포함하는 ESS Header와 실제 ESS 운영 데이터인 PCS, BAT, Rack, ETC(온습도) 데이터의 예시와 범위를 확인할 수 있다. 범위를 벗어나는 항목이 있는 경우는 전송한 데이 터 전체가 저장되지 않는다.
+> 
+
+## ESS Header
+
+| 영문명 | 표준용어명 | 설명 | 표시예시 | 바이트 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- |
+| site_id | 사이트 Id | 설비번호 | 12345678(0001) | 14 | string |  |
+| pcs_count | pcs 개수 | 전송하는 pcs 개수와
+동일해야함 | 1 | 2 | INT |  |
+| bat_count | bat 개수 | 전송하는 bat 개수와
+동일해야함 | 1 | 2 | INT |  |
+| timestamp | 시간 | KST 시간 | 'YYYY-MM-DD
+hh:mm:ss' | 19 | string |  |
+
+> *‘site_id’는 ESS통합관리시스템 내 ‘[시설관리]페이지 → 등록’에서 확인 가능하다.
+> 
+> - [등록] → 신고객번호/구고객번호/도로명/지번 입력 → 설비조회 → ‘설비번호’ 확인
+
+## PCS
+
+| 영문명 | 표준용어명 | 설명 | 표시
+예시 | 바이
+트 | 단위 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| index | Index | PCS 장치 순번 | 1 | 4 | - | INT |  |
+| communication_error | 통신 에러 | 1분지속시
+1 : Error, 0 : Normal | 1 | 1 | - | BOOL |  |
+| stop | 정지 | 1 : Stop, 0 : Normal | 1 | 1 | - | BOOL |  |
+| run | 가동 | 1 : Run, 0 : Normal | 1 | 1 | - | BOOL |  |
+| charge | 충전 | 1 : Charge, 0 : Normal | 1 | 1 | - | BOOL |  |
+| discharge | 방전 | 1 : Discharge, 0 :
+Normal | 1 | 1 | - | BOOL |  |
+| warning | 경고 | 1 : Warning, 0 : Normal | 1 | 1 | - | BOOL |  |
+| fault | 고장 | 1 : Fault, 0 : Normal | 1 | 1 | - | BOOL |  |
+| frequency | 주파수 |  | 60.01 | 4 | Hz | FLOAT | 0 ~ 99 |
+| ac_active_power | 교류 유효 전력 |  | 123.1 | 4 | kW | FLOAT | 0 ~ 9999 |
+| igbt_max_temperature | IGBT 최대 온도 | IGBT 없을시 PEBB,
+STACK, 내부 온도 | 23.5 | 4 | ℃ | FLOAT | -1000 ~ 1000 |
+| ac_voltage_rs | 교류 전압 RS상 | 선간 전압 없을시 상전압 | 340.1 | 4 | V | FLOAT | 0 ~ 999 |
+| ac_voltage_st | 교류 전압 ST상 | 선간 전압 없을시
+상전압 | 340.1 | 4 | V | FLOAT | 0 ~ 999 |
+
+| 영문명 | 표준용어명 | 설명 | 표시
+예시 | 바이
+트 | 단위 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ac_voltage_tr | 교류 전압 TR상 | 선간 전압 없을시
+상전압 | 340.1 | 4 | V | FLOAT | 0 ~ 999 |
+| ac_current_r | 교류 전류 R상 |  | 888.8 | 4 | A | FLOAT | 0 ~ 9999 |
+| ac_current_s | 교류 전류 S상 |  | 888.8 | 4 | A | FLOAT | 0 ~ 9999 |
+| ac_current_t | 교류 전류 T상 |  | 888.8 | 4 | A | FLOAT | 0 ~ 9999 |
+| dc_voltage | 직류 전압 |  | 999.9 | 4 | V | FLOAT | 0 ~ 9999 |
+| dc_current | 직류 전류 |  | 520.4 | 4 | A | FLOAT | 0 ~ 9999 |
+1. **BAT**
+
+| 영문명 | 표준용어명 | 설명 | 표시
+예시 | 바이
+트 | 단위 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| index | INDEX | 배터리 장치 순번 | 1 | 4 | - | INT |  |
+| communication_error | 통신 에러 | 1분 통신 에러시
+1 : Error, 0 : Normal | 1 | 1 | - | BOOL |  |
+| stop | 정지 | 1 : Stop, 0 : Normal | 1 | 1 | - | BOOL |  |
+| run | 가동 | 1 : Run, 0 : Normal | 1 | 1 | - | BOOL |  |
+| charge | 충전 | 1 : Charge, 0 : Normal | 1 | 1 | - | BOOL |  |
+| discharge | 방전 | 1 : Discharge, 0 :
+Normal | 1 | 1 | - | BOOL |  |
+| warning | 경고 | 1 : Warning, 0 : Normal | 1 | 1 | - | BOOL |  |
+| fault | 고장 | 1 : Fault, 0 : Normal | 1 | 1 | - | BOOL |  |
+| total_racks | 전체 랙 개수 | 전송하는 Rack 개수와
+동일해야 함 | 11 | 4 | - | INT |  |
+| soc | 충전율 |  | 70.2 | 4 | % | FLOAT | 0 ~ 100 |
+| soh | 잔존수명 |  | 99.9 | 4 | % | FLOAT | 0 ~ 100 |
+| dc_voltage | 직류 전압 |  | 888.8 | 4 | V | FLOAT | 0 ~ 9999 |
+| dc_current | 직류 전류 |  | 555.5 | 4 | A | FLOAT | 0 ~ 9999 |
+| max_cell_voltage | 최대 셀 전압 |  | 3.243 | 4 | V | FLOAT | 0 ~ 10 |
+| min_cell_voltage | 최소 셀 전압 |  | 3.125 | 4 | V | FLOAT | 0 ~ 10 |
+| max_module_temperature | 최대 모듈 온도 |  | 23.5 | 4 | ℃ | FLOAT | -100 ~ 100 |
+| min_module_temperature | 최소 모듈 온도 |  | 22.1 | 4 | ℃ | FLOAT | -100 ~ 100 |
+
+1. **Rack**
+
+| 영문명 | 표준용어명 | 설명 | 표시
+예시 | 바이
+트 | 단위 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| index | INDEX | 배터리 index가 n일
+경우 다시 1부터 시작 | 1 | 4 | - | INT |  |
+| communication_error | 통신 에러 | 1분 통신 에러시
+1 : Error, 0 : Normal | 1 | 1 | - | BOOL |  |
+| stop | 정지 | 1 : Stop, 0 : Normal | 1 | 1 | - | BOOL |  |
+| run | 가동 | 1 : Run, 0 : Normal | 1 | 1 | - | BOOL |  |
+| charge | 충전 | 1 : Charge, 0 : Normal | 1 | 1 | - | BOOL |  |
+| discharge | 방전 | 1 : Discharge, 0 :
+Normal | 1 | 1 | - | BOOL |  |
+| warning | 경고 | 1 : Warning, 0 : Normal | 1 | 1 | - | BOOL |  |
+| fault | 고장 | 1 : Fault, 0 : Normal | 1 | 1 | - | BOOL |  |
+| soc | 충전율 |  | 70.2 | 4 | % | FLOAT | 0 ~ 100 |
+| soh | 잔존수명 |  | 99.9 | 4 | % | FLOAT | 0 ~ 100 |
+| dc_voltage | 직류 전압 |  | 888.8 | 4 | V | FLOAT | 0 ~ 9999 |
+| dc_current | 직류 전류 |  | 555.5 | 4 | A | FLOAT | 0 ~ 9999 |
+| max_cell_voltage | 최대 셀 전압 | 없을시 cell, module,
+rack 값중 하나 전송 | 3.243 | 4 | V | FLOAT | 0 ~ 10 |
+| min_cell_voltage | 최소 셀 전압 | 없을시 cell, module, rack 값중 하나 전송 | 3.125 | 4 | V | FLOAT | 0 ~ 10 |
+| max_module_temperature | 최대 모듈 온도 | 없을시 cell, module,
+rack 값중 하나 전송 | 23.5 | 4 | ℃ | FLOAT | -100 ~ 100 |
+| min_module_temperature | 최소 모듈 온도 | 없을시 cell, module,
+rack 값중 하나 전송 | 22.1 | 4 | ℃ | FLOAT | -100 ~ 100 |
+1. **ETC**
+
+| 영문명 | 표준용어명 | 설명 | 표시
+예시 | 바이
+트 | 단위 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| battery_room_max_temperature | 배터리 실 최대 온도 |  | 23.5 | 4 | ℃ | FLOAT | -100 ~ 100 |
+| battery_room_max_humidity | 배터리 실 최대 습도 |  | 66.6 | 4 | % | FLOAT | 0 ~ 100 |
+
+1. **Event 데이터 연계 항목**
+
+> 3장에서는 ESS 통합관리시스템으로 연계해야 할 Event 데이터 항목에 관해 설명한다. 연계 담당자는 ESS Event 발생 즉시 발생 이벤트를 전송해야 하며, 해당 Event가 복구되면 복구 이벤트를 전송하도록 구현해야 한다. 아래 항목 중 device_name (장치 이름)은 ‘pcs 1’의 형태로 장치명과 장치 순번이 공백을 두고 합쳐진 것이다.
+> 
+> 
+> 3.3절의 Event Code 목록은 한국전기안전공사에서 ESS 이벤트를 규정한 항목이며, 모두 필 수적으로 연동해야 한다. 중요도가 특히 높은 항목은 비고에 critical로 별도 표시되어 있다. 실제 ESS 이벤트가 발생하기 전까지 이벤트 매핑이 잘 되었는지 확인하기 어렵다. 따라서 이벤트 연계 시 실제 발생한 ESS 이벤트와 연계한 이벤트가 일치하도록 주의하며 개발하여 야 한다.
+> 
+
+## Event 발생 Data
+
+| 영문명 | 표준용어명 | 설명 | 표시 예시 | 바이트 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- |
+| site_id | 사이트 id | 설비번호 | 12345678(0001) | 14 | string |  |
+| device_name | 장치 이름 | 이벤트가 발생한 장치의
+이름과 순번 | bat 1 | 200 | string |  |
+| event_code | 이벤트 코드 | 공통 에러 코드 | IMERR-ANW001 | 12 | string |  |
+| event_name | 이벤트 명 | 에러코드 명칭이 아닌 실 제 장치 이벤트 명
+(대소문자 구분없음) | battery under voltage | 200 | string |  |
+| occurred_datetime | 이벤트 발생 시간 | KST 시간 | 2022-10-23
+12:34:56 | 19 | string | 'YYYY-MM-D
+D hh:mm:ss' |
+- event_code는 3.3 Event Code 목록 참조
+
+## Event 복구 Data
+
+| 영문명 | 표준용어명 | 설명 | 표시 예시 | 바이트 | 타입 | 범위 |
+| --- | --- | --- | --- | --- | --- | --- |
+| site_id | 사이트 id | 설비번호 | 12345678(0001) | 14 | string |  |
+| device_name | 장치 이름 | 이벤트가 발생한 장치의 이름과 순번 | bat 1 | 200 | string |  |
+| event_code | 이벤트 코드 | 공통 에러 코드 | IMERR-ANW001 | 12 | string |  |
+| event_name | 이벤트 명 | 에러코드 명칭이 아닌 실 제 장치 이벤트 명
+(대소문자 구분없음) | battery under voltage | 200 | string |  |
+| recovered_datetime | 이벤트 복구 시간 | KST 시간 | 2022-10-23
+12:34:56 | 19 | string | 'YYYY-MM-D
+D hh:mm:ss' |
+- event_code는 3.3 Event Code 목록 참조
+
+## Event Code 목록
+
+### PCS
+
+| 이벤트 종류 | 항목 | 타입 | 이벤트
+코드 | 비고 | 설명 |
+| --- | --- | --- | --- | --- | --- |
+| warning | 직류 부족전압(dc under voltage) | string | IMERR-ANW001 |  |  |
+|  | 교류 부족전압(ac under voltage) | string | IMERR-ANW002 |  |  |
+|  | 주파수 상승(over frequency) | string | IMERR-ANW003 |  |  |
+|  | 주파수 저하(under frequency) | string | IMERR-ANW004 |  |  |
+|  | 과 온도(over temperature) | string | IMERR-ANW005 |  | IGBT > PEBB > Stack > PCS 내부 |
+|  | 직류 과전압(dc over voltage) | string | IMERR-ACW001 | critical |  |
+|  | 교류 과전압(ac over voltage) | string | IMERR-ACW002 | critical |  |
+|  | 교류 과전류(ac over current) | string | IMERR-ACW003 | critical |  |
+|  | 직류 과전류(dc over current) | string | IMERR-ACW004 | critical |  |
+| fault | 직류 부족전압(dc under voltage) | string | IMERR-ANF001 |  |  |
+|  | 교류 부족전압(ac under voltage) | string | IMERR-ANF002 |  |  |
+|  | 주파수 상승(over frequency) | string | IMERR-ANF003 |  |  |
+|  | 주파수 저하(under frequency) | string | IMERR-ANF004 |  |  |
+|  | 과 온도(over temperature) | string | IMERR-ANF005 |  | IGBT > PEBB > Stack > PCS 내부 |
+|  | 직류 과전압(dc over voltage) | string | IMERR-ACF001 | critical |  |
+|  | 교류 과전압(ac over voltage) | string | IMERR-ACF002 | critical |  |
+|  | 교류 과전류(ac over current) | string | IMERR-ACF003 | critical |  |
+|  | 직류 과전류(dc over current) | string | IMERR-ACF004 | critical |  |
+|  | 지락 전류(ground fault current) | string | IMERR-ACF005 | critical |  |
+1. BAT
+
+| 이벤트 종류 | 항목 | 타입 | 이벤트
+코드 | 비고 | 설명 |
+| --- | --- | --- | --- | --- | --- |
+| warning | 전압 불평형(voltage imbalance) | string | IMERR-BNW001 |  |  |
+|  | 온도 불평형(temperature imbalance) | string | IMERR-BNW002 |  |  |
+|  | 과충전( over charge power limit) | string | IMERR-BCW001 | critical |  |
+|  | 과방전( over discharge power limit) | string | IMERR-BCW002 | critical |  |
+|  | 직류 과전압(dc over voltage) | string | IMERR-BCW003 | critical | Cell > Module > Rack |
+|  | 직류 과충전전류(dc over charge
+current) | string | IMERR-BCW004 | critical | Cell > Module > Rack |
+|  | 모듈 온도 상승(module over temperature) | string | IMERR-BCW005 | critical |  |
+|  | 직류 과방전전류(dc over discharge
+current) | string | IMERR-BCW006 | critical |  |
+| fault | 전압 불평형(voltage imbalance) | string | IMERR-BNF001 |  |  |
+
+| 이벤트 종류 | 항목 | 타입 | 이벤트
+코드 | 비고 | 설명 |
+| --- | --- | --- | --- | --- | --- |
+|  | 온도 불평형(temperature imbalance) | string | IMERR-BNF002 |  |  |
+|  | 과충전( over charge power limit) | string | IMERR-BCF001 | critical |  |
+|  | 과방전( over discharge power limit) | string | IMERR-BCF002 | critical |  |
+|  | 직류 과전압 (dc over voltage) | string | IMERR-BCF003 | critical | Cell > Module > Rack |
+|  | 직류 과충전전류(dc over charge
+current) | string | IMERR-BCF004 | critical | Cell > Module > Rack |
+|  | 모듈 온도 상승(module over
+temperature) | string | IMERR-BCF005 | critical |  |
+|  | 통신이상(communication error) | string | IMERR-BCF007 | critical | BAT<-> RACK 통신에러 |
+|  | 직류 과방전전류(dc over discharge
+current) | string | IMERR-BCF008 | critical |  |
+|  | 배터리 소화장치 설비(bat fire suppression system) | string | IMERR-BFF001 | critical | 주수소화장치, 소화약재, Off-gas등 |
+1. Rack
+
+| 이벤트 종류 | 항목 | 타입 | 이벤트
+코드 | 비고 | 설명 |
+| --- | --- | --- | --- | --- | --- |
+| warning | 전압 불평형(voltage imbalance) | string | IMERR-CNW001 |  |  |
+|  | 온도 불평형(temperature imbalance) | string | IMERR-CNW002 |  |  |
+|  | 과충전( over charge power limit) | string | IMERR-CCW001 | critical |  |
+|  | 과방전( over discharge power limit) | string | IMERR-CCW002 | critical |  |
+|  | 직류 과전압(dc over voltage) | string | IMERR-CCW003 | critical | Cell > Module > Rack |
+|  | 직류 과충전전류(dc over charge current) | string | IMERR-CCW004 | critical | Cell > Module > Rack |
+|  | 모듈 온도 상승(module over temperature) | string | IMERR-CCW005 | critical |  |
+|  | 직류 과방전전류(dc over discharge current) | string | IMERR-CCW006 | critical |  |
+| fault | 전압 불평형(voltage imbalance) | string | IMERR-CNF001 |  |  |
+|  | 온도 불평형(temperature imbalance) | string | IMERR-CNF002 |  |  |
+|  | 과충전( over charge power limit) | string | IMERR-CCF001 | critical |  |
+|  | 과방전( over discharge power limit) | string | IMERR-CCF002 | critical |  |
+|  | 직류 과전압(dc over voltage) | string | IMERR-CCF003 | critical | Cell > Module > Rack |
+|  | 직류 과충전전류(dc over charge
+current) | string | IMERR-CCF004 | critical | Cell > Module > Rack |
+|  | 모듈 온도 상승(module over
+temperature) | string | IMERR-CCF005 | critical |  |
+
+| 이벤트 종류 | 항목 | 타입 | 이벤트
+코드 | 비고 | 설명 |
+| --- | --- | --- | --- | --- | --- |
+|  | 직류 과방전전류(dc over discharge
+current) | string | IMERR-CCF006 | critical |  |
+1. ETC
+
+| 이벤트 종류 | 항목 | 타입 | 이벤트
+코드 | 비고 | 설명 |
+| --- | --- | --- | --- | --- | --- |
+| fault | 배터리실 온도상승(batter room over temperature) | string | IMERR-DCF001 | critical | 배터리실 온도가 진단 조건값(23℃
+±5)보다 초과 상태로 1분이상 유지
+될 경우 fault |
+
+## 문서 URL
+
+> 6장에서 설명할 API 명세는 ‘KESCO 연계 시뮬레이터’ 프로그램에서 제공하는 링크에서 도 확인할 수 있다. 전송해야 하는 ESS 운영 데이터와 Event 데이터의 스키마 및 요청 (Request) 메시지와 응답 (Response) 메시지의 샘플을 확인할 수 있다.
+> 
+> - http://{시뮬레이터 실행 서버 ip}:7890/redoc (ex. http://127.0.0.1:7890/redoc )
+
+> 
+> 
+
+![](attachment:5cedd1f8-60f7-4fb7-9343-97b13a11a745:image33.jpeg)
+
+> (API 문서 URL로 접속한 모습)
+> 
+
+# REST API 연동
+
+> 6장에서는 ESS 통합관리시스템에 연동하기 위해 KESCO 연계 프로그램/시뮬레이터의 내부 REST API 서버와 통신하는 API 명세에 대해 다룬다. 데이터 전송 주기, HTTP method, 요청 및 응답 메시지 예시 등을 확인할 수 있다.
+> 
+> 
+> KESCO 연계 프로그램/시뮬레이터는 내부에 REST API 서버를 기동하고 있다. 이 REST API 서버에 데이터를 전송하면 ESS 통합관리시스템에 전송된다. local 환경에서 데이터를 연동할 경우 url를 localhost가 아닌 127.0.0.1로 적어야 한다.
+> 
+
+## ESS 데이터 연동
+
+> 연계 담당자는 1분마다 실시간 ESS 운영 데이터를 REST API 서버로 전송하도록 구현해야 한다.
+> 
+
+### API 명세
+
+| URI | http://127.0.0.1:7890/ess/data 또는 실행한 IP |
+| --- | --- |
+| HTTP Method | POST |
+| Header | Accept: application/json
+Content-Type: application/json |
+| 메시지 교환유형 | JSON |
+| 연동주기 | 1분 |
+| 설명 | ESS data 전송 |
+1. 요청 메시지 상세
+
+### {
+
+> "header": {
+> 
+> 
+> "site_id": "12345678(0001)",
+> 
+> "pcs_count": 1,
+> 
+> "bat_count": 1,
+> 
+> "timestamp": "YYYY-MM-DD hh:mm:ss"
+> 
+> },
+> 
+> "pcs": [{
+> 
+> "index": 1, "communication_error": false, "stop": false,
+> 
+> "run": false, "charge": false, "discharge": false, "warning": false, "fault": false, "frequency": 60.03,
+> 
+> "ac_active_power": 222.2,
+> 
+
+"igbt_max_temperature": 56.4,
+
+"ac_voltage_rs": 381.2,
+
+"ac_voltage_st": 382.2,
+
+"ac_voltage_tr": 380.1,
+
+"ac_current_r": 888.8,
+
+"ac_current_s": 888.8,
+
+"ac_current_t": 888.8,
+
+"dc_voltage": 890.4,
+
+"dc_current": 432.1}
+
+], "bat": [{
+
+"index": 1, "communication_error": false, "stop": false,
+
+"run": false, "charge": false, "discharge": false, "warning": false, "fault": false, "total_racks": 1,
+
+"soc": 80.5,
+
+"soh": 99.9,
+
+"dc_voltage": 888.8,
+
+"dc_current": 456.7,
+
+"max_cell_voltage": 3.245,
+
+"min_cell_voltage": 3.121,
+
+"max_module_temperature": 27.6,
+
+"min_module_temperature": 23.5, "racks": [{
+
+"index": 1, "communication_error": false, "stop": false,
+
+"run": false, "charge": false, "discharge": false, "warning": false, "fault": false, "soc": 80.5,
+
+"soh": 99.9,
+
+"dc_voltage": 888.8,
+
+"dc_current": 456.7,
+
+"max_cell_voltage": 3.245,
+
+"min_cell_voltage": 3.121,
+
+"max_module_temperature": 27.6,
+
+"min_module_temperature": 23.5}]
+
+}
+
+> ], "etc": {
+> 
+> 
+> "battery_room_max_temperature": 27.6,
+> 
+> "battery_room_max_humidity": 55.5
+> 
+> }
+> 
+> }
+> 
+> 2. ESS 데이터 연계 항목 참조
+> 
+
+1. 응답 메시지 상세
+
+| code | description | Content type | example |
+| --- | --- | --- | --- |
+| 200 | 성공 | application/json | {"detail": "success"} |
+| 422 | 데이터 정합성 에러 | application/json | {
+"detail": [
+{
+"loc": [
+"string"
+],
+"msg": "string",
+"type": "string"
+}
+]
+} |
+| 500 | 전송 에러 | application/json | {"detail": "send fail"} |
+
+> 422 에러는 데이터 정합성 에러를 뜻하며, msg에 상세 데이터 정합성 에러 메시지가 나온 다. 예를 들어 422 응답 에러가 아래와 같이 왔다면, header에 timestamp format이 맞지 않 다는 뜻이다.
+> 
+> 
+> {'detail': [
+> 
+> {'loc': ['body', 'header', 'timestamp'],
+> 
+> 'msg': 'invalid datetime format', 'type': 'value_error.datetime'}
+> 
+> ]}
+> 
+> ![](attachment:e64b2367-081f-4ebf-a716-415c3fa1cf63:image34.jpeg)
+> 
+> ※ 주의사항
+> 
+- header에 pcs_count, bat_count가 실제 전송하는 pcs, bat 배열의 길이가 맞지 않을 경 우 응답으로 422 value 에러 발생
+- header에 timestamp는 UTC 시간이 아닌 KST 시간으로 전송한다.
+- bat에 total_racks 와 실제 전송하는 rack 배열의 길이가 맞지 않을 경우 422 value 에 러 발생
+- header에 timestamp와 현재 시간이 1시간 이상 차이나면 422 value 에러 발생
+- 항목을 빠트리거나 범위를 넘어가면 422 value 에러 발생
+
+> 
+> 
+
+## Event 발생 데이터 연동
+
+> 연계 담당자는 이벤트가 발생하면 즉시 발생 이력을 REST API 서버로 전송하도록 구현해 야 한다.
+> 
+
+### API 명세
+
+| URI | http://127.0.0.1:7890/ess/event/occurred 또는 실행한 IP |
+| --- | --- |
+| HTTP Method | POST |
+| Header | Accept: application/json
+Content-Type: application/json |
+| 메시지 교환유형 | JSON |
+| 연동주기 | 이벤트 발생시 (즉시) |
+| 설명 | event 발생 이력 전송 |
+1. 요청 메시지 상세
+
+### {
+
+> "site_id": "12345678(0001)",
+> 
+> 
+> "device_name": "rack 1-1", "event_code": "IMERR-CCW001", "event_name": "Battery Cell Imbalance",
+> 
+> "occurred_datetime": "2022-01-01 12:34:00"
+> 
+> }
+> 
+
+| 항목 상세 |  |  |
+| --- | --- | --- |
+| 항목 | 설명 | 비고 |
+| site_id | 설비번호 : 12345678(0001) | 전기안전공사에서 부여 |
+|  | “장치 종류 + 공백 + 장치 순번” 이벤트가 복구된 장치를 식별하는 문자. | • bat1에서 이벤트 발생시 ‘bat 1’로 표기
+• pcs2에서 이벤트 발생시 ‘pcs 2'로 표기
+• bat2 rack3에서 이벤트가 발 생시 'rack 2-3'로 표기
+• etc에서 이벤트 발생시 순번없이 ’etc‘로만 표기 |
+| device_name | RACK의 경우 장치 순번은 “BAT 순번 + ‘-’ + RACK 순번”
+etc의 경우 순번없이 etc로 표기 |  |
+| event_code | 발생한 이벤트코드 | 3.3 EventCode 목록 참조 |
+| event_name | EventCode 명칭이 아닌 실제 장치에서 나 오는 이벤트 명칭 | ex) Battery Under Voltage |
+| occurred_datetime | 이벤트가 발생한 시각의 timestamp | YYYY-MM-DD hh:mm:ss |
+
+> 
+> 
+1. 응답 메시지 상세
+
+| code | description | Content type | example |
+| --- | --- | --- | --- |
+| 200 | 성공 | application/json | {"detail": "success"} |
+| 422 | 데이터 정합성 에러 | application/json | {
+"detail": [
+{
+"loc": [
+"string"
+],
+"msg": "string",
+"type": "string"
+}
+]
+} |
+| 500 | 전송 에러 | application/json | {"detail": "send fail"} |
+
+> 422 에러는 데이터 정합성 에러를 뜻하며, msg에 상세 데이터 정합성 에러 메시지가 나온 다. 예를 들어 422 응답 에러가 아래와 같이 왔다면, occurred_datetime format이 맞지 않다 는 뜻이다.
+> 
+> 
+> {"detail": [
+> 
+> {"loc": ["body", "occurred_datetime"],
+> 
+> "msg": "invalid datetime format", "type": "value_error.datetime"}
+> 
+> ]}
+> 
+> ※ 주의사항
+> 
+- device_name 포맷을 지키지 않을시 422 value error 발생
+- occurred_datetime을 적지 않을시 422 value error 발생
+
+## Event 복구 데이터 연동
+
+> 연계 담당자는 이벤트가 복구되면 복구 이력을 즉시 REST API 서버로 전송하도록 구현해 야 한다.
+> 
+
+### API 명세
+
+| URI | http://127.0.0.1:7890/ess/event/recovered 또는 실행한 IP |
+| --- | --- |
+| HTTP Method | POST |
+
+> 
+> 
+
+| Header | Accept: application/json
+Content-Type: application/json |
+| --- | --- |
+| 메시지 교환유형 | JSON |
+| 연동주기 | 이벤트 복구시 (즉시) |
+| 설명 | event 복구 이력 전송 |
+1. 요청 메시지 상세
+
+### {
+
+> "site_id": "12345678(0001)",
+> 
+> 
+> "device_name": "rack 1-1", "event_code": "IMERR-CCW001", "event_name": "Battery Cell Imbalance",
+> 
+> "recovered_datetime": "2022-01-01 12:40:00"
+> 
+> }
+> 
+1. 응답 메시지 상세
+
+| code | description | Content type | example |
+| --- | --- | --- | --- |
+| 200 | 성공 | application/json | {"detail": "success"} |
+
+> 
+> 
+
+| code | description | Content type | example |
+| --- | --- | --- | --- |
+| 422 | 데이터 정합성 에러 | application/json | {
+"detail": [
+{
+"loc": [
+"string"
+],
+"msg": "string",
+"type": "string"
+}
+]
+} |
+| 500 | 전송 에러 | application/json | {"detail": "send fail"} |
+
+> 422 에러는 데이터 정합성 에러를 뜻하며, msg에 상세 데이터 정합성 에러 메시지가 나온 다. 예를 들어 422 응답 에러가 아래와 같이 왔다면, recovered_datetime format이 맞지 않 다는 뜻이다.
+> 
+> 
+> {"detail": [
+> 
+> {"loc": ["body", "recovered_datetime"],
+> 
+> "msg": "invalid datetime format", "type": "value_error.datetime"}
+> 
+> ]}
+> 
+> ※ 주의사항
+> 
+- device_name 포맷을 지키지 않을시 422 value error 발생
+- recovered_datetime을 적지 않을시 422 value error 발생
+
+> 
+> 
+
+# 참고사항
+
+## 샘플 코드
+
+> KESCO 연계 프로그램으로 연동할 수 있는 샘플 코드는 별도 파일로 제공한다. JAVA와 Python 언어의 샘플 코드를 제공한다.
+> 
+
+## 보안
+
+> 이 문서는 ESS 통합관리시스템으로 연동을 담당하는 담당사 개발자를 대상으로 한다. 본 문서가 외부로 유출되지 않도록 주의하여야 한다.
+> 
+
+## 문의처
+
+> 이 문서의 내용 오류 또는 연계 관련한 문의 사항은 아래 연락처로 문의 바랍니다.
+> 
+> 
+> □ ㈜ 대건소프트 기술지원팀 : 042) 932-5051
+> 
+- KESCO 연계 프로그램 개발자 이메일 : [kgs@daegunsoft.com](mailto:kgs@daegunsoft.com)
